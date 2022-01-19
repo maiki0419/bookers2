@@ -1,3 +1,4 @@
+<h3>投稿数の前日比・前週比</h3>
 <table class="table table-bordered">
   <thead>
     <tr>
@@ -32,7 +33,13 @@
     <tr>
       <td><%= @record_thisweek.count %></td>
       <td><%= @record_lastweek.count %></td>
-      <td>70%</td>
+      <td>
+        <% if @record_lastweek.count == 0 %>
+          前週無
+        <% else %>
+          <%= @record_week * 100.round %>%
+        <% end %>
+      </td>
     </tr>
   </tbody>
 </table>
