@@ -13,13 +13,15 @@ class UsersController < ApplicationController
     #bookrecord7b@record_lastweek = @books.created_lastweek
     #bookrecord7b@record_week = @record_thisweek.count / @record_lastweek.count.to_f
 
-    @record_today = @books.created_today
-    @record_1day = @books.created_1day
-    @record_2day = @books.created_2day
-    @record_3day = @books.created_3day
-    @record_4day = @books.created_4day
-    @record_5day = @books.created_5day
-    @record_6day = @books.created_6day
+    #bookrecord8b@record_today = @books.created_today
+    #bookrecord8b@record_1day = @books.created_1day
+    #bookrecord8b@record_2day = @books.created_2day
+    #bookrecord8b@record_3day = @books.created_3day
+    #bookrecord8b@record_4day = @books.created_4day
+    #bookrecord8b@record_5day = @books.created_5day
+    #bookrecord8b@record_6day = @books.created_6day
+    day =params[:day]
+    @record_search = @books.where(['created_at LIKE ? ', "#{day}%"])
 
   end
 
