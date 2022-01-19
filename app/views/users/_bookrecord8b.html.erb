@@ -22,3 +22,34 @@
       <td><%= @record_today.count %></td>
     </tr>
  </table>
+
+ <canvas id="myChart"></canvas>
+
+ <!-- ライブラリ読込 -->
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI=" crossorigin="anonymous"></script>
+ <script>
+ var ctx = document.getElementById('myChart').getContext('2d');
+ var chart = new Chart(ctx, {
+     type: 'line',
+
+     // データを指定
+     data: {
+         labels: ['6日前', '5日前', '4日前', '3日前', '2日前', '1日前', '今日'],
+         datasets: [{
+             label: '投稿した本の数',
+             borderColor: 'blue',
+             fill: false,
+             data: [<%= @record_6day.count %>, <%= @record_5day.count %>, <%= @record_4day.count %>, <%= @record_3day.count %>,<%= @record_2day.count %>, <%= @record_1day.count %>, <%= @record_today.count %>]
+         }]
+     },
+
+     // 設定はoptionsに記述
+     options: {
+       //タイトル
+       title: {
+         display: true,
+         text: '7日間の投稿数の比較'
+       }
+     }
+});
+</script>
