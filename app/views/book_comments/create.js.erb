@@ -1,2 +1,3 @@
 document.getElementById('book_comments').innerHTML = '<%= j(render 'books/comment',book_comments: @book_comments) %>';
 document.getElementById('text_area').value = '';
+document.getElementById('comment_count').innerHTML = '<p>コメント数：<%= j(@book.book_comments.count) %></p>';

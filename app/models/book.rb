@@ -6,6 +6,12 @@ class Book < ApplicationRecord
   validates :body, presence: true, length: {maximum: 200}
 
 
+  scope :created_today, -> {where(created_at: Time.zone.now.all_day)}
+  scope :created_yesterday, -> {where(created_at: 1.day.ago.all_day)}
+
+  scope :created_thisweek, -> {where(created_at: Date.today.prev_week(:saturday) .. Date.today-(Date.today.wday-5))}
+  scope :created_lastweek, -> {where(created_at: Date.today-(Date.today.wday-6)-14 .. Date.today-(Date.today.wday-5)-7)}
+
   def favorited_by?(user)
     favorites.exists?(user_id: user.id)
   end
