@@ -7,10 +7,11 @@ class BooksController < ApplicationController
     @book_comment = BookComment.new
     @book_comments = @book.book_comments
     @user = @book.user
+    @test = @book.book_likes
   end
 
   def index
-    @books = Book.all
+    @books = Book.created_1week.sort{|a,b| b.favorited_users.size <=> a.favorited_users.size}
     @book =Book.new
   end
 

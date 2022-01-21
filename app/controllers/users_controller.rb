@@ -20,6 +20,7 @@ class UsersController < ApplicationController
     #bookrecord8b@record_4day = @books.created_4day
     #bookrecord8b@record_5day = @books.created_5day
     #bookrecord8b@record_6day = @books.created_6day
+    
     day =params[:day]
     @record_search = @books.where(['created_at LIKE ? ', "#{day}%"])
 
