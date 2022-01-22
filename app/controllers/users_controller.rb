@@ -5,6 +5,31 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @books = @user.books
     @book = Book.new
+    @currentuserentry = Entry.where(user_id: current_user.id)
+    @userentry = Entry.where(user_id: @user.id)
+
+    if @user.id != current_user.id
+
+      @currentuserentry.each do |cu|
+        @userentry.each do |u|
+
+          if cu.room_id == u.room_id
+            @isroom = true
+            @roomid = cu.room_id
+          end
+
+        end
+      end
+
+      unless @isroom
+        @room = Room.new
+        @entry = Entry.new
+      end
+
+   end
+
+
+
 
     #bookrecord7b@record_today = @books.created_today
     #bookrecord7b@record_yesterday = @books.created_yesterday
@@ -20,7 +45,7 @@ class UsersController < ApplicationController
     #bookrecord8b@record_4day = @books.created_4day
     #bookrecord8b@record_5day = @books.created_5day
     #bookrecord8b@record_6day = @books.created_6day
-    
+
     day =params[:day]
     @record_search = @books.where(['created_at LIKE ? ', "#{day}%"])
 
