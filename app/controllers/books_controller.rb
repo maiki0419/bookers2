@@ -7,6 +7,28 @@ class BooksController < ApplicationController
     @book_comment = BookComment.new
     @book_comments = @book.book_comments
     @user = @book.user
+     @currentuserentry = Entry.where(user_id: current_user.id)
+    @userentry = Entry.where(user_id: @user.id)
+
+    if @user.id != current_user.id
+
+      @currentuserentry.each do |cu|
+        @userentry.each do |u|
+
+          if cu.room_id == u.room_id
+            @isroom = true
+            @roomid = cu.room_id
+          end
+
+        end
+      end
+
+      unless @isroom
+        @room = Room.new
+        @entry = Entry.new
+      end
+
+    end
   end
 
   def index
