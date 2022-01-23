@@ -30,6 +30,9 @@
           <td id="comment_count">
             <p>コメント数：<%= @book.book_comments.count %></p>
           </td>
+          <td>
+            <p>閲覧数：<%= @book.impressionist_count(:filter=>:session_hash) %>　</p>
+          </td>
         </tr>
       </table>
       <table id="book_comments">

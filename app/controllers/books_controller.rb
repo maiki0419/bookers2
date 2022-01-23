@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
   before_action :correct_user,only: [:edit, :update]
+  impressionist :actions=> [:show]
 
   def show
     @book = Book.find(params[:id])
@@ -9,6 +10,7 @@ class BooksController < ApplicationController
     @user = @book.user
      @currentuserentry = Entry.where(user_id: current_user.id)
     @userentry = Entry.where(user_id: @user.id)
+    impressionist(@book, nil, unique: [:session_hash.to_s])
 
     if @user.id != current_user.id
 
