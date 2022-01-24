@@ -1,4 +1,5 @@
 class GroupsController < ApplicationController
+  before_action :correct,only: [:edit,:update]
 
   def new
     @group = Group.new
@@ -21,15 +22,21 @@ class GroupsController < ApplicationController
   end
 
   def show
-
+    @group = Group.find(params[:id])
+    @book_new =Book.new
   end
 
   def edit
-
+    @group = Group.find(params[:id])
   end
 
   def update
-
+    @group = Group.find(params[:id])
+    if @group.update(group_params)
+      redirect_to user_group_path(current_user.id,@group.id)
+    else
+      render :edit
+    end
   end
 
   def destroy
@@ -38,8 +45,16 @@ class GroupsController < ApplicationController
 
   private
 
+
   def group_params
     params.require(:group).permit(:name, :introduction, :image_id,)
+  end
+
+  def correct
+    @group = Group.find(params[:id])
+    unless @group.owner_id == current_user.id
+      redirect_to users_path
+    end
   end
 
 end
