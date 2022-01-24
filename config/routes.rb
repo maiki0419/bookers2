@@ -11,7 +11,10 @@ Rails.application.routes.draw do
   end
   resources :users, only: [:index,:show,:edit,:update] do
     resource :relationships, only: [:create, :destroy]
-    resources :groups, only: [:new, :create, :index, :show, :edit, :update, :destroy]
+    resources :groups, only: [:new, :create, :index, :show, :edit, :update, :destroy] do
+      get 'join' => 'groups#join'
+      get 'out' => 'groups#out'
+    end
     get :followings, on: :member
     get :followers,on: :member
   end

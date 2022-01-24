@@ -5,6 +5,8 @@ class Group < ApplicationRecord
   validates :name,presence: true,uniqueness: true
   validates :introduction, length: {maximum: 140}
 
+
+
   def get_image_id(size)
     unless image_id.attached?
       file_path = Rails.root.join('app/assets/images/no_image.jpg')

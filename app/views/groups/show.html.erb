@@ -9,16 +9,39 @@
     <div class='col-md-8 offset-md-1'>
   		<h2>Group detail</h2>
       	<table class='table'>
+      	  <thead>
+            <tr>
+              <th></th>
+              <th>グループ名</th>
+              <th>紹介文</th>
+              <th>メンバー</th>
+              <th colspan="2"></th>
+            </tr>
+          </thead>
       	  <tr>
           <td>
-            <%= image_tag @group.get_image_id("100x100") %><br>
+            <%= image_tag @group.get_image_id("100x100") %>
           </td>
           <td><%= @group.name %></td>
           <td><%= @group.introduction %></td>
+          <td>
+            <ul class="list-inline">
+              <% @group.group_users.each do |group_user| %>
+                <li>
+                  <%= group_user.user.name %>
+                </li>
+              <% end %>
+            </ul>
 
+          </td>
           <% if @group.owner_id == current_user.id %>
             <td><%= link_to 'Edit', edit_user_group_path(current_user.id,@group.id), class: "btn btn-sm btn-success " %></td>
-
+          <% else %>
+            <% if @isgroup %>
+             <td><%= link_to "Leave this group", user_group_out_path(current_user.id,@group.id),class:"btn btn-danger" %></td>
+            <% else %>
+             <td><%= link_to "join this group", user_group_join_path(current_user.id,@group.id),class:"btn btn-success" %></td>
+            <% end %>
           <% end %>
 
         </tr>
@@ -27,3 +50,4 @@
     </div>
   </div>
 </div>
+<%= @isgroup %>

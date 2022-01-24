@@ -8,22 +8,41 @@ class GroupsController < ApplicationController
   def create
     @group = Group.new(group_params)
     @group.owner_id = current_user.id
-    @groupuser = current_user.group_users.create(group_id: @group.id)
+
     if @group.save
-      redirect_to user_groups_path(current_user.id)
+      @group_user = current_user.group_users.create(group_id: @group.id)
+      redirect_to user_groups_path
     else
       render :new
     end
   end
 
+  def join
+    @group_user = current_user.group_users.create(group_id: params[:group_id])
+    redirect_to user_groups_path
+  end
+
+  def out
+    @group_user = GroupUser.find_by(user_id: params[:user_id],group_id: params[:group_id])
+    @group_user.destroy
+    redirect_to user_groups_path
+  end
+
   def index
     @book = Book.new
     @groups = Group.all
+    @group_user = GroupUser.all
+
   end
 
   def show
     @group = Group.find(params[:id])
     @book_new =Book.new
+    if GroupUser.find_by(user_id: current_user, group_id: @group.id).present?
+      @isgroup = true
+    else
+      @isgroup = false
+    end
   end
 
   def edit
