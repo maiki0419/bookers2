@@ -9,6 +9,7 @@ class User < ApplicationRecord
   has_many :book_comment
   has_many :entries, dependent: :destroy
   has_many :messages, dependent: :destroy
+  has_many :group_users, dependent: :destroy
 
   has_many :relationships, foreign_key: :following_id
   has_many :followings, through: :relationships, source: :follower
@@ -25,8 +26,12 @@ class User < ApplicationRecord
 
 
 
-  def get_profile_image
-    (profile_image.attached?) ? profile_image : 'no_image.jpg'
+  def get_profile_image(size)
+    unless profile_image.attached?
+      file_path = Rails.root.join('app/assets/images/no_image.jpg')
+      profile_image.attach(io: File.open(file_path),filename: 'default-image.jpg', content_type: 'image/jpeg')
+    end
+    profile_image.variant(resize: size).processed
   end
 
   def followed_by?(user)
