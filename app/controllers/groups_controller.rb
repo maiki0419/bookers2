@@ -40,9 +40,14 @@ class GroupsController < ApplicationController
     @contact = params[:contact]
     @title = params[:title]
 
+    if @title.length == 0 or @contact.length == 0
+      flash[:notice]= "送信失敗"
+      render :contact
+    end
+
     @users.each do |user_id|
       @user = user_id.user
-      ContactMailer.send_mail(@user,@contact,current_user,@title).deliver_now
+      ContactMailer.send_mail(@user,@contact,@title).deliver_now
     end
 
 

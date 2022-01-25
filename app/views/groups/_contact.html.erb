@@ -1,4 +1,5 @@
 <h2>Event Mail</h2>
+
 <%= form_with  url: user_group_contact_path(user.id,group.id), method: :post, local: false do |f| %>
   <p>Title</p>
   <%= f.text_field :title, class: "form-control " %>
