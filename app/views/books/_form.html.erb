@@ -1,4 +1,5 @@
 <%= form_with model:book,local:true do |f| %>
+
   <div class="form-group">
     <%= f.label :title %>
     <%= f.text_field :title, class: 'form-control book_title' %>
@@ -7,6 +8,15 @@
     <%= f.label :opinion %>
     <%= f.text_area :body, class: 'form-control book_body' %>
   </div>
+  <%= fields_for review,local: true do |r| %>
+    <span class="far fa-star" id="star"></span>
+    <span class="far fa-star" id="star"></span>
+    <span class="far fa-star" id="star"></span>
+    <span class="far fa-star" id="star"></span>
+    <span class="far fa-star" id="star"></span>
+    <%= r.hidden_field :book_id, value: "#{book.id}" %>
+    <%= r.hidden_field :score, id: "rating-value" %>
+  <% end %>
   <div class="form-group">
     <%= f.submit class: 'btn btn-success' %>
   </div>

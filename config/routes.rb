@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   get '/searches/search' => 'searches#search',as: 'searches'
   devise_for :users
   resources :books, only: [:index,:show,:edit,:create,:destroy,:update] do
+    resources :reviews, only: [:create]
     resources :book_comments, only: [:create,:destroy]
     resource :favorite, only: [:create, :destroy]
   end
