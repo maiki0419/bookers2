@@ -28,6 +28,30 @@ class GroupsController < ApplicationController
     redirect_to user_groups_path
   end
 
+  def contact
+    @user = User.find(params[:user_id])
+    @group = Group.find(params[:group_id])
+    @users = @group.group_users
+  end
+
+  def contact_create
+    @group = Group.find(params[:group_id])
+    @users = @group.group_users
+    @contact = params[:contact]
+    @title = params[:title]
+
+    @users.each do |user_id|
+      @user = user_id.user
+      ContactMailer.send_mail(@user,@contact,current_user,@title).deliver_now
+    end
+
+
+  end
+
+
+
+
+
   def index
     @book = Book.new
     @groups = Group.all

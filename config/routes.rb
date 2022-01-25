@@ -14,10 +14,14 @@ Rails.application.routes.draw do
     resources :groups, only: [:new, :create, :index, :show, :edit, :update, :destroy] do
       get 'join' => 'groups#join'
       get 'out' => 'groups#out'
+      get 'contact' => 'groups#contact'
+      post 'contact' => 'groups#contact_create'
+
     end
     get :followings, on: :member
     get :followers,on: :member
   end
+
   resources :messages, only: [:create]
   resources :rooms, only: [:create, :show]
 
