@@ -5,11 +5,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @books = @user.books
     @book = Book.new
-    @review =Review.new
     @currentuserentry = Entry.where(user_id: current_user.id)
     @userentry = Entry.where(user_id: @user.id)
 
-    
+
 
     if @user.id != current_user.id
 

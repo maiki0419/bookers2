@@ -4,13 +4,14 @@
       <th></th>
       <th>Title</th>
       <th>Opinion</th>
-      <th colspan="3"></th>
+
     </tr>
   </thead>
   <tbody>
     <% books.each do |book| %>
       <tr>
         <td>
+
           <%= link_to user_path(book.user.id) do %>
             <%= image_tag book.user.get_profile_image("50x50") %>
           <% end %>
@@ -21,7 +22,18 @@
           <%= render 'books/favorite',book: book %>
         </td>
         <td><p>コメント数：<%= book.book_comments.count %></p></td>
-        <td><p>閲覧数：<%= book.impressionist_count(:filter=>:session_hash) %>　</p></td>
+        <td>
+           <div id="star-rate-<%= book.id %>"></div>
+            <script>
+                  $('#star-rate-<%= book.id %>').raty({
+                    size: 36,
+                    starOff:  '<%= asset_path('star-off.png') %>',
+                    starOn : '<%= asset_path('star-on.png') %>',
+                    readOnly: true,
+                    score: <%= book.rate %>,
+                });
+            </script>
+        </td>
       </tr>
     <% end %>
   </tbody>

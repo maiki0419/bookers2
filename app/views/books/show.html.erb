@@ -31,7 +31,16 @@
             <p>コメント数：<%= @book.book_comments.count %></p>
           </td>
           <td>
-            <p>閲覧数：<%= @book.impressionist_count(:filter=>:session_hash) %>　</p>
+            <div id="star-rate-<%= @book.id %>"></div>
+            <script>
+                  $('#star-rate-<%= @book.id %>').raty({
+                    size: 36,
+                    starOff:  '<%= asset_path('star-off.png') %>',
+                    starOn : '<%= asset_path('star-on.png') %>',
+                    readOnly: true,
+                    score: <%= @book.rate %>,
+                });
+            </script>
           </td>
         </tr>
       </table>
