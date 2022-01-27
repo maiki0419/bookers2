@@ -5,6 +5,7 @@ class BooksController < ApplicationController
   def show
     @book = Book.find(params[:id])
     @book_new = Book.new
+    @category = @book.categories.new
     @book_comment = BookComment.new
     @book_comments = @book.book_comments
     @user = @book.user
@@ -34,9 +35,21 @@ class BooksController < ApplicationController
   end
 
   def index
-    @books = Book.created_1week.sort{|a,b| b.favorited_users.size <=> a.favorited_users.size}
+    if params[:sort_date] == "rate"
+      @books = Book.all.order(rate: :desc)
+    elsif params[:sort_date] == "create"
+      @books = Book.all.order(created_at: :desc)
+    else
+      @books = Book.created_1week.sort{|a,b| b.favorited_users.size <=> a.favorited_users.size}
+    end
+
     @book =Book.new
+    @category = @book.categories.new
+
   end
+
+
+
 
   def create
     @book = Book.new(book_params)
@@ -71,7 +84,7 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :body, :rate)
+    params.require(:book).permit(:title, :body, :rate,categories_attributes: [:name, :_destroy,])
   end
 
   def correct_user

@@ -3,10 +3,16 @@ class Book < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :book_comments
   has_many :favorited_users ,through: :favorites, source: :user
+  has_many :categories, dependent: :destroy
+  accepts_nested_attributes_for :categories, allow_destroy: true
+  has_many :category_books, through: :categories, source: :book
+
+
 
 
   validates :title, presence: true
   validates :body, presence: true, length: {maximum: 200}
+  validates :rate, presence: true
 
   is_impressionable
 

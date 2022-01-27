@@ -10,7 +10,8 @@
     </tr>
   </thead>
   <tbody>
-    <% books.each do |book| %>
+    <% categories.each do |category| %>
+      <% book = Book.find(category.book_id) %>
       <tr>
         <td>
 
@@ -21,8 +22,8 @@
         <td><%= link_to book.title,book, class: "book_#{book.id}" %></td>
         <td><%= book.body %></td>
          <td>
-          <% book.categories.each do |category| %>
-           <%= link_to category.name, searches_categorysearch_path(word: "#{category.name}"),remote: true %>
+          <%book.categories.each do |category| %>
+            <p><%= category.name %></p>
           <% end %>
         </td>
         <td id='book_<%= book.id %>'>
